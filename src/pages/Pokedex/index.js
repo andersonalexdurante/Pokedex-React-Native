@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, FlatList, Image, Text, TouchableOpacity} from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
@@ -8,37 +8,47 @@ import Bulbasaur from '../../assets/bulba.png'
 import styles from './styles'
 
 export default function Pokedex() {
-    const [pokemons, setPokemons] = useState([])
+    const [pokemonsIndex, setPokemonsIndex] = useState([])
     const [loading, setLoading] = useState(false)
-    const [offset, setOffset] = useState(20)
+    const [next, setNext] = useState('')
+    const [pokemons, setPokemons] = useState([])
+
+    const aux = []
 
     async function loadPokemons(){
         if(loading){
             return;
         }
 
-        if(pokemons.length === 964){
+        if(pokemonsIndex.length === 40){
             return;
         }
 
-        if(pokemons.length < 20) {
-            const res = await api.get('');
+        if(pokemonsIndex.length < 20) {
+            const res = await api.get('https://pokeapi.co/api/v2/pokemon');
             setLoading(true)
-            setPokemons([...pokemons, ...res.data])
+            setPokemonsIndex([...pokemonsIndex, ...res.data['results']])
+            console.log(res.data['results'].url)
+            setNext(res.data.next)
+            console.log({next})
         }
 
-        if(pokemons.length > 20) {
-            const res = await api.get(`/?offset=${offset}&limit=20`)
+        if(pokemonsIndex.length >= 20) {
+            const res = await api.get(`${next}`)
             setLoading(true)
-            setPokemons([...pokemons, ...res.data])
-            setOffset(offset + 20)
+            setPokemonsIndex([...pokemonsIndex, ...res.data['results']])
+            setNext(res.data.next)
+            console.log({next})
         }
-
 
         setLoading(false)
     }
 
+    useEffect(() => {
+        loadPokemons()
+    }, [])
 
+    const numColumns = 2
     return(
         <View style={styles.container}>
 
@@ -50,66 +60,23 @@ export default function Pokedex() {
                 </TouchableOpacity>
             </View>
 
-           <View style={styles.pokemonList}>
-
-                <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-                    <View style={styles.pokemonCard}>
-                        <Text style={styles.cardName}>Bulbasaur</Text>
-                        <Text style={styles.cardType}>Grass</Text>
-                        <Text style={styles.cardType}>Poison</Text>
-                        <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                    </View>
-
-            </View>
-        
+           <FlatList 
+            style={styles.pokemonList}
+            numColumns={numColumns}
+            data={pokemonsIndex}
+            keyExtractor={pokemon => String(pokemon.name)}
+            showsVerticalScrollIndicator={false}
+            onEndReached={loadPokemons}
+            onEndReachedThreshold={0.2}
+            renderItem={ ({item: pokemon}) => (
+                <TouchableOpacity style={styles.pokemonCard}>
+                    <Text style={styles.cardName}>{pokemon.name}</Text>
+                    <Text style={styles.cardType}>Grass</Text>
+                    <Text style={styles.cardType}>Poison</Text>
+                    <Image style={styles.cardPokemon} source={Bulbasaur}/>
+                </TouchableOpacity>
+            )}
+            />
         </View>
     )
 }

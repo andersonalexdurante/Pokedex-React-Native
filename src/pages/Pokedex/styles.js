@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import Constants from 'expo-constants'
 
 export default StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         paddingTop: Constants.statusBarHeight + 20
     },
 
@@ -12,7 +12,7 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent:"space-between",
         alignItems: 'center',
-        marginBottom: 48
+        marginBottom: 30
     },
 
     headerTitle: {
@@ -21,17 +21,15 @@ export default StyleSheet.create({
     },
 
     pokemonList: {
-        flexDirection: 'row',
-        flexWrap: 'wrap'
+       flexBasis: 1
     },
 
     pokemonCard: {
         backgroundColor: '#89C893',
         borderRadius: 8,
-        width: '48%',
-        height: 120,
+        width: (Dimensions.get('window').width / 2) - 14 ,
         justifyContent: "space-between",
-        marginBottom: 20,
+        marginBottom: 10,
         margin: 2
     },
 
@@ -39,22 +37,23 @@ export default StyleSheet.create({
         paddingTop: 10,
         paddingLeft: 10,
         color: '#fff',
-        fontSize: 23,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: 'bold',
     },
 
     cardType: {
-        paddingTop: 10,
+        fontSize: 15,
+        fontStyle: 'italic',
         color: '#fff',
+        top: 15,
         paddingLeft: 20,
     },
 
     cardPokemon: {
         alignSelf: 'flex-end',
-        width: 60,
-        height: 60,
-        bottom: 50,
-        right: 5,
+        width: 70,
+        height: 70,
+        bottom: 5
     }
 
 })
