@@ -3,43 +3,37 @@ import { View, FlatList, Image, Text, TouchableOpacity} from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import api from '../../services/api'
+import PokemonCard from './pokemonCard'
 
-import Bulbasaur from '../../assets/bulba.png'
 import styles from './styles'
 
 export default function Pokedex() {
     const [pokemonsIndex, setPokemonsIndex] = useState([])
     const [loading, setLoading] = useState(false)
     const [next, setNext] = useState('')
-    const [pokemons, setPokemons] = useState([])
-
-    const aux = []
 
     async function loadPokemons(){
         if(loading){
             return;
         }
 
-        if(pokemonsIndex.length === 40){
+        if(pokemonsIndex.length == 100){
             return;
         }
 
-        if(pokemonsIndex.length < 20) {
-            const res = await api.get('https://pokeapi.co/api/v2/pokemon');
+        if(pokemonsIndex.length == 0) {
+            const res = await api.get('https://pokeapi.co/api/v2/pokemon/?offset=386&limit=20');
             setLoading(true)
-            setPokemonsIndex([...pokemonsIndex, ...res.data['results']])
-            console.log(res.data['results'].url)
+            setPokemonsIndex(res.data['results'])
             setNext(res.data.next)
-            console.log({next})
+            setLoading(false)
+            return;
         }
 
-        if(pokemonsIndex.length >= 20) {
-            const res = await api.get(`${next}`)
-            setLoading(true)
-            setPokemonsIndex([...pokemonsIndex, ...res.data['results']])
-            setNext(res.data.next)
-            console.log({next})
-        }
+        const res = await api.get(`${next}`)
+        setLoading(true)
+        setPokemonsIndex([...pokemonsIndex, ...res.data['results']])
+        setNext(res.data.next)
 
         setLoading(false)
     }
@@ -56,7 +50,7 @@ export default function Pokedex() {
                 <Text style={styles.headerTitle}>Pokedex</Text>
 
                 <TouchableOpacity>
-                    <Feather name='menu' size={20}/>
+                    <Feather name='menu' size={24}/>
                 </TouchableOpacity>
             </View>
 
@@ -65,16 +59,16 @@ export default function Pokedex() {
             numColumns={numColumns}
             data={pokemonsIndex}
             keyExtractor={pokemon => String(pokemon.name)}
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
             onEndReached={loadPokemons}
             onEndReachedThreshold={0.2}
+            windowSize={5}
+            on
             renderItem={ ({item: pokemon}) => (
-                <TouchableOpacity style={styles.pokemonCard}>
-                    <Text style={styles.cardName}>{pokemon.name}</Text>
-                    <Text style={styles.cardType}>Grass</Text>
-                    <Text style={styles.cardType}>Poison</Text>
-                    <Image style={styles.cardPokemon} source={Bulbasaur}/>
-                </TouchableOpacity>
+                <PokemonCard pokemon={{
+                    name: pokemon.name,
+                    url: pokemon.url
+                }}/>
             )}
             />
         </View>

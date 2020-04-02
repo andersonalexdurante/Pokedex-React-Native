@@ -17,7 +17,8 @@ export default StyleSheet.create({
 
     headerTitle: {
         fontSize: 40,
-        letterSpacing: 4
+        letterSpacing: 4,
+        fontWeight: 'bold'
     },
 
     pokemonList: {
@@ -34,7 +35,6 @@ export default StyleSheet.create({
     },
 
     cardName: {
-        paddingTop: 10,
         paddingLeft: 10,
         color: '#fff',
         fontSize: 20,
@@ -45,15 +45,13 @@ export default StyleSheet.create({
         fontSize: 15,
         fontStyle: 'italic',
         color: '#fff',
-        top: 15,
         paddingLeft: 20,
     },
 
     cardPokemon: {
         alignSelf: 'flex-end',
-        width: 70,
-        height: 70,
-        bottom: 5
+        width: 100,
+        height: 100,
     }
 
 })
