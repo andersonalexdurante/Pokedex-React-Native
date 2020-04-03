@@ -21,8 +21,8 @@ export default function pokemonCard(props){
     },[color])
 
 
-    function navigateToPokemon(pokemon) {
-        navigation.navigate('Pokemon', {pokemon})
+    function navigateToPokemon(pokemon, sprite, color, name, types) {
+        navigation.navigate('Pokemon', {pokemon, sprite, color, name, types})
     }
 
     async function loadPokemonData() {
@@ -40,7 +40,7 @@ export default function pokemonCard(props){
     }
 
     return(
-        <TouchableOpacity style={[styles.pokemonCard, {backgroundColor: `#${color}`}]} onPress={() => navigateToPokemon(pokemon)}>
+        <TouchableOpacity style={[styles.pokemonCard, {backgroundColor: `#${color}`}]} onPress={() => navigateToPokemon(pokemon, sprite, color, name, types)}>
             <Text style={styles.cardName}>{name.charAt(0).toUpperCase() + name.substring(1)}</Text>
             <Text style={styles.cardType}>{[types[0]].toString().charAt(0).toUpperCase() + [types[0]].toString().substring(1)}</Text>
             <Text style={styles.cardType}>{[types[1]].toString().charAt(0).toUpperCase() + [types[1]].toString().substring(1)}</Text>

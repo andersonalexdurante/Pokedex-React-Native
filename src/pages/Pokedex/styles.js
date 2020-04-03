@@ -54,7 +54,6 @@ export default StyleSheet.create({
     cardType: {
         transform: [{translateY: 30}],
         fontSize: 15,
-        fontStyle: 'italic',
         fontWeight: '800',
         color: '#fff',
         paddingLeft: 10,
