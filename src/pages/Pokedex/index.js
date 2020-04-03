@@ -4,6 +4,7 @@ import { Feather } from '@expo/vector-icons'
 
 import api from '../../services/api'
 import PokemonCard from './pokemonCard'
+import pokeball from '../../assets/pokeball.png'
 
 import styles from './styles'
 
@@ -51,7 +52,9 @@ export default function Pokedex() {
 
                 <TouchableOpacity>
                     <Feather name='menu' size={24}/>
+                    <Image style={styles.pokeballMenu} source={pokeball}/>
                 </TouchableOpacity>
+               
             </View>
 
            <FlatList 
@@ -63,7 +66,7 @@ export default function Pokedex() {
             onEndReached={loadPokemons}
             onEndReachedThreshold={0.2}
             windowSize={5}
-            on
+            refreshing={true}
             renderItem={ ({item: pokemon}) => (
                 <PokemonCard pokemon={{
                     name: pokemon.name,

@@ -21,12 +21,21 @@ export default StyleSheet.create({
         fontWeight: 'bold'
     },
 
+    pokeballMenu: {
+        position: 'absolute',
+        zIndex: -1,
+        height: 200,
+        width:200,
+        alignSelf: "flex-end",
+        opacity: 0.1,
+        transform: [{translateY: -90}, {translateX: 87}]
+    },
+
     pokemonList: {
        flexBasis: 1
     },
 
     pokemonCard: {
-        backgroundColor: '#89C893',
         borderRadius: 8,
         width: (Dimensions.get('window').width / 2) - 14 ,
         justifyContent: "space-between",
@@ -35,6 +44,7 @@ export default StyleSheet.create({
     },
 
     cardName: {
+        transform: [{translateY: 10}],
         paddingLeft: 10,
         color: '#fff',
         fontSize: 20,
@@ -42,16 +52,29 @@ export default StyleSheet.create({
     },
 
     cardType: {
+        transform: [{translateY: 30}],
         fontSize: 15,
         fontStyle: 'italic',
+        fontWeight: '800',
         color: '#fff',
-        paddingLeft: 20,
+        paddingLeft: 10,
     },
 
     cardPokemon: {
         alignSelf: 'flex-end',
         width: 100,
         height: 100,
+        right: 1
+    },
+
+    pokeballList: {
+        height: 110,
+        width: 110,
+        zIndex: -1,
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        opacity: 0.1,
+        transform: [{translateY: 65}, {translateX: 5}]
     }
 
 })
