@@ -57,17 +57,17 @@ export default StyleSheet.create({
     },
 
     pokemonImage: {
-        height: 250,
-        width: 250,
+        height: 260,
+        width: 260,
         zIndex: 1,
-        transform: [{translateX: -20}]
+        transform: [{translateX: -30}]
     },
 
     pokeballImage: {
         position: 'absolute',
-        height: 250,
-        width: 250,
-        opacity: 0.2,
+        height: 260,
+        width: 260,
+        opacity: 0.1,
         transform: [{translateX: -20}]
     },
 

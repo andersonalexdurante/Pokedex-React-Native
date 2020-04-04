@@ -18,7 +18,7 @@ export default function Pokedex() {
             return;
         }
 
-        if(pokemonsIndex.length == 100){
+        if(pokemonsIndex.length == 120){
             return;
         }
 
