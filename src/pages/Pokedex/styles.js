@@ -56,7 +56,7 @@ export default StyleSheet.create({
         fontSize: 15,
         fontWeight: '800',
         color: '#fff',
-        paddingLeft: 10,
+        transform: [{translateX: 10}, {translateY: 15}]
     },
 
     cardPokemon: {

@@ -7,6 +7,10 @@ export default StyleSheet.create({
         paddingTop: Constants.statusBarHeight + 20,
     },
 
+    divisionTop: {
+        maxHeight: Dimensions.get('screen').height / 2
+    },
+
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -37,7 +41,7 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: '800',
         color: '#fff',
-        paddingTop: 5,
+        paddingTop: 3,
         paddingLeft: 20,
     },
 
@@ -65,5 +69,16 @@ export default StyleSheet.create({
         width: 250,
         opacity: 0.2,
         transform: [{translateX: -20}]
-    }
+    },
+
+    divisionBottom: {
+        zIndex: -1,
+        height: Dimensions.get('screen').height / 2
+    },
+
+    tabView: {
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+    },
+
 })
